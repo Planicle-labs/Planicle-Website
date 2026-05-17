@@ -4,13 +4,12 @@ import {
   motion,
   useScroll,
   useTransform,
-  useSpring,
   useMotionValue,
   useMotionValueEvent,
   AnimatePresence,
   useReducedMotion,
 } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const navLinks = [
   { href: "#services", label: "Services" },
@@ -18,74 +17,69 @@ const navLinks = [
   { href: "#pricing", label: "Pricing" },
 ];
 
-// The key insight: we drive transforms off a motionValue that tracks scroll DOWN
-// normally, but on scroll UP we aggressively pull it back toward 0 so the nav
-// expands immediately — no waiting to reach the physical top.
+const COMPACT_RANGE = 250; // px of real scroll to fully compact/expand
+const EXPAND_ZONE = 600;  // only expand on scroll-up within first section
+
 export function Navbar() {
   const { scrollY, scrollYProgress } = useScroll();
   const [mobileOpen, setMobileOpen] = useState(false);
   const prefersReduced = useReducedMotion();
 
-  // A synthetic scroll value we control (0 = fully expanded, 100 = fully compact).
-  // COMPACT_RANGE: real scroll-px needed to traverse the full 0→100 transition.
-  // EXPAND_ZONE:  scrollY must be within this distance from top for scroll-UP to expand the nav.
-  //               Beyond this point the nav stays compact regardless of scroll direction.
-  const COMPACT_RANGE = 250;
-  const EXPAND_ZONE = 600; // roughly the height of the first section
   const displayScrollY = useMotionValue(0);
   const lastScrollYRef = useRef(0);
 
+  // Init from actual scroll position on mount — fixes "reload while scrolled" flash
+  useEffect(() => {
+    const y = window.scrollY;
+    lastScrollYRef.current = y;
+    displayScrollY.set(Math.min((y / COMPACT_RANGE) * 100, 100));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const prev = lastScrollYRef.current;
-    const delta = latest - prev;
+    const delta = latest - lastScrollYRef.current;
     lastScrollYRef.current = latest;
 
     if (latest <= 10) {
-      // At the very top — always fully expand
       displayScrollY.set(0);
     } else if (delta > 0) {
-      // Scrolling DOWN anywhere → compact
       displayScrollY.set(Math.min(displayScrollY.get() + (delta / COMPACT_RANGE) * 100, 100));
     } else if (latest <= EXPAND_ZONE) {
-      // Scrolling UP, but only within the first section — expand gradually
       displayScrollY.set(Math.max(displayScrollY.get() + (delta / COMPACT_RANGE) * 100, 0));
     }
-    // Scrolling UP outside EXPAND_ZONE → do nothing; nav stays compact
   });
 
-  // Gentle spring to smooth out per-frame jitter without adding lag
-  const smoothScrollY = useSpring(displayScrollY, {
-    stiffness: 200,
-    damping: 28,
-    restDelta: 0.001,
-  });
+  // --- All transforms off displayScrollY directly — no spring, no lag, no SSR mismatch ---
 
-  // Interpolate values based on scroll position (0 to 100px)
-  const navMaxWidth = useTransform(smoothScrollY, [0, 100], [1024, 520]);
-  const navPaddingX = useTransform(smoothScrollY, [0, 100], [20, 16]);
-  const navPaddingY = useTransform(smoothScrollY, [0, 100], [12, 8]);
-  const navGap = useTransform(smoothScrollY, [0, 100], [32, 16]);
+  // Layout
+  const navMaxWidth  = useTransform(displayScrollY, [0, 100], [1024, 520]);
+  const navPaddingX  = useTransform(displayScrollY, [0, 100], [20, 16]);
+  const navPaddingY  = useTransform(displayScrollY, [0, 100], [12, 8]);
+  const navGap       = useTransform(displayScrollY, [0, 100], [32, 16]);
 
-  // Background and border interpolations
-  const bgOpacity = useTransform(smoothScrollY, [0, 100], [0.3, 0.6]);
-  const borderOpacity = useTransform(smoothScrollY, [0, 100], [0.06, 0.1]);
-  const shadowOpacity = useTransform(smoothScrollY, [0, 100], [0.15, 0.3]);
+  // Logo text
+  const textOpacity  = useTransform(displayScrollY, [0, 60], [1, 0]);
+  const textWidth    = useTransform(displayScrollY, [0, 60], [70, 0]);
+  const textMargin   = useTransform(displayScrollY, [0, 60], [10, 0]);
 
-  // Logo text interpolation - avoid "auto" which breaks interpolation
-  const textOpacity = useTransform(smoothScrollY, [0, 60], [1, 0]);
-  const textWidth = useTransform(smoothScrollY, [0, 60], [70, 0]);
-  const textMargin = useTransform(smoothScrollY, [0, 60], [10, 0]);
+  // CTA button
+  const ctaPaddingX  = useTransform(displayScrollY, [0, 100], [20, 16]);
+  const ctaPaddingY  = useTransform(displayScrollY, [0, 100], [8, 6]);
+  const ctaFontSize  = useTransform(displayScrollY, [0, 100], [11, 10]);
 
-  // CTA interpolation
-  const ctaPaddingX = useTransform(smoothScrollY, [0, 100], [20, 16]);
-  const ctaPaddingY = useTransform(smoothScrollY, [0, 100], [8, 6]);
-  const ctaFontSize = useTransform(smoothScrollY, [0, 100], [11, 10]);
+  // Background / border / shadow — kept at top level to avoid SSR mismatch from inline useTransform
+  const bgOpacity     = useTransform(displayScrollY, [0, 100], [0.3, 0.6]);
+  const borderOpacity = useTransform(displayScrollY, [0, 100], [0.06, 0.1]);
+  const shadowOpacity = useTransform(displayScrollY, [0, 100], [0.15, 0.3]);
+  const bgColor       = useTransform(bgOpacity,     (o) => `oklch(0.15 0.008 270 / ${o})`);
+  const borderColor   = useTransform(borderOpacity, (o) => `oklch(0.97 0.005 90 / ${o})`);
+  const boxShadow     = useTransform(shadowOpacity, (o) => `0 8px 32px rgba(0,0,0,${o})`);
 
   return (
     <header className="fixed top-5 inset-x-0 z-50 flex justify-center px-4 md:px-6 pointer-events-none">
       <motion.nav
         initial={prefersReduced ? false : { opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         style={{
           maxWidth: navMaxWidth,
           paddingLeft: navPaddingX,
@@ -93,9 +87,9 @@ export function Navbar() {
           paddingTop: navPaddingY,
           paddingBottom: navPaddingY,
           gap: navGap,
-          backgroundColor: useTransform(bgOpacity, (o) => `oklch(0.15 0.008 270 / ${o})`),
-          borderColor: useTransform(borderOpacity, (o) => `oklch(0.97 0.005 90 / ${o})`),
-          boxShadow: useTransform(shadowOpacity, (o) => `0 8px 32px rgba(0, 0, 0, ${o})`),
+          backgroundColor: bgColor,
+          borderColor: borderColor,
+          boxShadow: boxShadow,
         }}
         className="relative w-full flex items-center justify-between rounded-full backdrop-blur-xl backdrop-saturate-150 border pointer-events-auto overflow-hidden"
       >
@@ -110,7 +104,7 @@ export function Navbar() {
             className="h-7 w-auto"
           />
           <motion.span
-            style={{ 
+            style={{
               opacity: textOpacity,
               marginLeft: textMargin,
               width: textWidth,
@@ -174,12 +168,9 @@ export function Navbar() {
           </div>
         </button>
 
-        {/* Scroll progress bar — thin line at bottom of navbar pill */}
+        {/* Scroll progress bar */}
         <motion.div
-          style={{
-            scaleX: scrollYProgress,
-            transformOrigin: "0% 50%",
-          }}
+          style={{ scaleX: scrollYProgress, transformOrigin: "0% 50%" }}
           className="absolute bottom-0 left-4 right-4 h-[2px] bg-primary/60 rounded-full"
         />
       </motion.nav>
