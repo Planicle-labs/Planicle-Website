@@ -92,9 +92,18 @@ export function Hero() {
             </a>
             <a
               href="#services"
-              className="inline-flex items-center justify-center px-7 py-3.5 font-medium text-text-secondary border border-border hover:border-foreground/30 hover:text-foreground rounded-lg transition-all duration-300 ease-out-quint"
+              className="group inline-flex items-center justify-center gap-2 px-7 py-3.5 font-medium text-foreground bg-white/5 backdrop-blur-md border border-white/10 rounded-lg transition-all duration-300 ease-out-quint hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5"
             >
               What we build
+              <svg
+                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </a>
           </motion.div>
         </div>

@@ -53,7 +53,7 @@ export function Footer() {
               Connect
             </span>
             <a
-              href="https://wa.me/919876543210"
+              href="https://wa.me/917678455973?text=Hi%2C%20I%20want%20a%20website"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-text-secondary hover:text-accent transition-colors ease-out-quint"
@@ -61,17 +61,18 @@ export function Footer() {
               WhatsApp
             </a>
             <a
-              href="mailto:hello@planicle.com"
+              href="mailto:contact@planicle.com"
+              target="_top"
               className="text-sm text-text-secondary hover:text-accent transition-colors ease-out-quint"
             >
-              Email
+              contact@planicle.com
             </a>
-            <a
+            {/* <a
               href="#"
               className="text-sm text-text-secondary hover:text-accent transition-colors ease-out-quint"
             >
               LinkedIn
-            </a>
+            </a> */}
           </div>
         </div>
 

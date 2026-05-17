@@ -132,7 +132,9 @@ export function Navbar() {
 
         {/* Desktop CTA */}
         <motion.a
-          href="#cta"
+          href="https://wa.me/917678455973?text=Hi%2C%20I%20want%20a%20website"
+          target="_blank"
+          rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
           style={{
@@ -197,7 +199,9 @@ export function Navbar() {
                 </a>
               ))}
               <a
-                href="#cta"
+                href="https://wa.me/917678455973?text=Hi%2C%20I%20want%20a%20website"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
                 className="mt-4 flex items-center justify-center px-5 py-3 text-sm font-bold text-accent-foreground bg-accent rounded-xl transition-all"
               >
