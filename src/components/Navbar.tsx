@@ -3,11 +3,14 @@
 import {
   motion,
   useScroll,
+  useTransform,
+  useSpring,
+  useMotionValue,
   useMotionValueEvent,
   AnimatePresence,
   useReducedMotion,
 } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const navLinks = [
   { href: "#services", label: "Services" },
@@ -15,62 +18,140 @@ const navLinks = [
   { href: "#pricing", label: "Pricing" },
 ];
 
+// The key insight: we drive transforms off a motionValue that tracks scroll DOWN
+// normally, but on scroll UP we aggressively pull it back toward 0 so the nav
+// expands immediately — no waiting to reach the physical top.
 export function Navbar() {
   const { scrollY, scrollYProgress } = useScroll();
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const prefersReduced = useReducedMotion();
 
+  // A synthetic scroll value we control (0 = fully expanded, 100 = fully compact).
+  // COMPACT_RANGE: real scroll-px needed to traverse the full 0→100 transition.
+  // EXPAND_ZONE:  scrollY must be within this distance from top for scroll-UP to expand the nav.
+  //               Beyond this point the nav stays compact regardless of scroll direction.
+  const COMPACT_RANGE = 250;
+  const EXPAND_ZONE = 600; // roughly the height of the first section
+  const displayScrollY = useMotionValue(0);
+  const lastScrollYRef = useRef(0);
+
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 50);
+    const prev = lastScrollYRef.current;
+    const delta = latest - prev;
+    lastScrollYRef.current = latest;
+
+    if (latest <= 10) {
+      // At the very top — always fully expand
+      displayScrollY.set(0);
+    } else if (delta > 0) {
+      // Scrolling DOWN anywhere → compact
+      displayScrollY.set(Math.min(displayScrollY.get() + (delta / COMPACT_RANGE) * 100, 100));
+    } else if (latest <= EXPAND_ZONE) {
+      // Scrolling UP, but only within the first section — expand gradually
+      displayScrollY.set(Math.max(displayScrollY.get() + (delta / COMPACT_RANGE) * 100, 0));
+    }
+    // Scrolling UP outside EXPAND_ZONE → do nothing; nav stays compact
   });
 
+  // Gentle spring to smooth out per-frame jitter without adding lag
+  const smoothScrollY = useSpring(displayScrollY, {
+    stiffness: 200,
+    damping: 28,
+    restDelta: 0.001,
+  });
+
+  // Interpolate values based on scroll position (0 to 100px)
+  const navMaxWidth = useTransform(smoothScrollY, [0, 100], [1024, 520]);
+  const navPaddingX = useTransform(smoothScrollY, [0, 100], [20, 16]);
+  const navPaddingY = useTransform(smoothScrollY, [0, 100], [12, 8]);
+  const navGap = useTransform(smoothScrollY, [0, 100], [32, 16]);
+
+  // Background and border interpolations
+  const bgOpacity = useTransform(smoothScrollY, [0, 100], [0.3, 0.6]);
+  const borderOpacity = useTransform(smoothScrollY, [0, 100], [0.06, 0.1]);
+  const shadowOpacity = useTransform(smoothScrollY, [0, 100], [0.15, 0.3]);
+
+  // Logo text interpolation - avoid "auto" which breaks interpolation
+  const textOpacity = useTransform(smoothScrollY, [0, 60], [1, 0]);
+  const textWidth = useTransform(smoothScrollY, [0, 60], [70, 0]);
+  const textMargin = useTransform(smoothScrollY, [0, 60], [10, 0]);
+
+  // CTA interpolation
+  const ctaPaddingX = useTransform(smoothScrollY, [0, 100], [20, 16]);
+  const ctaPaddingY = useTransform(smoothScrollY, [0, 100], [8, 6]);
+  const ctaFontSize = useTransform(smoothScrollY, [0, 100], [11, 10]);
+
   return (
-    <header className="fixed top-5 inset-x-0 z-50 flex justify-center px-4 md:px-6">
+    <header className="fixed top-5 inset-x-0 z-50 flex justify-center px-4 md:px-6 pointer-events-none">
       <motion.nav
         initial={prefersReduced ? false : { opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`relative flex items-center justify-between w-full max-w-5xl rounded-full transition-all duration-500 ease-out-quint px-5 py-3 backdrop-blur-xl backdrop-saturate-150 border ${
-          scrolled
-            ? "bg-surface/60 border-foreground/[0.1] shadow-[0_4px_30px_rgba(0,0,0,0.4)]"
-            : "bg-surface/30 border-foreground/[0.06] shadow-[0_2px_20px_rgba(0,0,0,0.2)]"
-        }`}
+        style={{
+          maxWidth: navMaxWidth,
+          paddingLeft: navPaddingX,
+          paddingRight: navPaddingX,
+          paddingTop: navPaddingY,
+          paddingBottom: navPaddingY,
+          gap: navGap,
+          backgroundColor: useTransform(bgOpacity, (o) => `oklch(0.15 0.008 270 / ${o})`),
+          borderColor: useTransform(borderOpacity, (o) => `oklch(0.97 0.005 90 / ${o})`),
+          boxShadow: useTransform(shadowOpacity, (o) => `0 8px 32px rgba(0, 0, 0, ${o})`),
+        }}
+        className="relative w-full flex items-center justify-between rounded-full backdrop-blur-xl backdrop-saturate-150 border pointer-events-auto overflow-hidden"
       >
         {/* Logo */}
-        <a
+        <motion.a
           href="#"
-          className="font-display text-lg font-bold tracking-tight flex items-center gap-2.5 group"
+          className="font-display text-lg font-bold tracking-tight flex items-center group shrink-0"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <motion.img
             src="/logo/Logo_white.svg"
             alt="Planicle"
             className="h-7 w-auto"
           />
-          Planicle
-        </a>
+          <motion.span
+            style={{ 
+              opacity: textOpacity,
+              marginLeft: textMargin,
+              width: textWidth,
+            }}
+            className="overflow-hidden whitespace-nowrap hidden md:block"
+          >
+            Planicle
+          </motion.span>
+        </motion.a>
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
-            <a
+            <motion.a
               key={link.href}
               href={link.href}
-              className="px-4 py-2 text-[11px] uppercase tracking-[0.05em] font-medium text-foreground/70 hover:text-foreground transition-colors duration-200 ease-out-quint"
+              whileHover={{ y: -1 }}
+              whileTap={{ scale: 0.97 }}
+              className="px-4 py-2 text-[11px] uppercase tracking-[0.05em] font-medium text-foreground/70 hover:text-foreground transition-colors duration-200"
             >
               {link.label}
-            </a>
+            </motion.a>
           ))}
         </div>
 
         {/* Desktop CTA */}
-        <a
+        <motion.a
           href="#cta"
-          className="hidden md:inline-flex items-center justify-center px-5 py-2 text-[11px] uppercase tracking-[0.05em] font-bold text-accent-foreground bg-accent rounded-full transition-all duration-300 ease-out-quint hover:scale-105 shadow-[0_0_16px_-4px_var(--color-accent)]"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.97 }}
+          style={{
+            paddingLeft: ctaPaddingX,
+            paddingRight: ctaPaddingX,
+            paddingTop: ctaPaddingY,
+            paddingBottom: ctaPaddingY,
+            fontSize: ctaFontSize,
+          }}
+          className="hidden md:inline-flex items-center justify-center font-bold text-accent-foreground bg-accent rounded-full shadow-[0_0_16px_-4px_var(--color-accent)] shrink-0 uppercase tracking-[0.05em]"
         >
           Book Deal
-        </a>
+        </motion.a>
 
         {/* Mobile toggle */}
         <button
