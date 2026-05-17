@@ -15,6 +15,7 @@ export function Hero() {
           style={{ position: "absolute", inset: 0 }}
           pixelDensity={1.5}
           fov={45}
+          lazyLoad={false}
         >
           <ShaderGradient
             control="props"

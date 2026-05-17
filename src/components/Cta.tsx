@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import {
   motion,
   useScroll,
@@ -12,26 +12,6 @@ import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
 export function Cta() {
   const sectionRef = useRef<HTMLElement>(null);
   const prefersReduced = useReducedMotion();
-  const [shaderMounted, setShaderMounted] = useState(false);
-
-  // Lazy-mount the ShaderGradient when CTA is near viewport
-  useEffect(() => {
-    if (prefersReduced) return;
-    const el = sectionRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShaderMounted(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "300px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [prefersReduced]);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -84,47 +64,39 @@ export function Cta() {
       className="relative py-32 md:py-48 px-6 md:px-12 overflow-hidden"
     >
       {/* ShaderGradient reprise — more intense, urgent colors */}
-      {shaderMounted && (
-        <motion.div
-          style={{ opacity: shaderOpacity }}
-          className="absolute inset-0 z-0"
+      <motion.div
+        style={{ opacity: shaderOpacity }}
+        className="absolute inset-0 z-0"
+      >
+        <ShaderGradientCanvas
+          style={{ position: "absolute", inset: 0 }}
+          pixelDensity={1}
+          fov={45}
+          lazyLoad={false}
         >
-          <ShaderGradientCanvas
-            style={{ position: "absolute", inset: 0 }}
-            pixelDensity={1}
-            fov={45}
-          >
-            <ShaderGradient
-              control="props"
-              type="plane"
-              animate="on"
-              color1="#6B58FF"
-              color2="#00E8C8"
-              color3="#0A0A14"
-              cDistance={3}
-              cPolarAngle={100}
-              uSpeed={0.25}
-              uStrength={2.4}
-              uDensity={1.6}
-              uFrequency={5.5}
-              brightness={1.2}
-              wireframe={false}
-              grain="on"
-              grainBlending={0.04}
-            />
-          </ShaderGradientCanvas>
+          <ShaderGradient
+            control="props"
+            type="plane"
+            animate="on"
+            color1="#6B58FF"
+            color2="#00E8C8"
+            color3="#0A0A14"
+            cDistance={3}
+            cPolarAngle={100}
+            uSpeed={0.25}
+            uStrength={2.4}
+            uDensity={1.6}
+            uFrequency={5.5}
+            brightness={1.2}
+            wireframe={false}
+            grain="on"
+            grainBlending={0.04}
+          />
+        </ShaderGradientCanvas>
 
-          {/* Overlay to maintain text legibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background/90" />
-        </motion.div>
-      )}
-
-      {/* Fallback ambient glow for reduced motion or before shader loads */}
-      {!shaderMounted && (
-        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[80vw] h-[30vw] bg-primary/8 blur-[160px] rounded-full" />
-        </div>
-      )}
+        {/* Overlay to maintain text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background/90" />
+      </motion.div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="max-w-3xl">
