@@ -115,7 +115,7 @@ export function Cta() {
           </motion.p>
           <motion.a
             style={{ opacity: btnOpacity, y: btnY }}
-            href="https://wa.me/919876543210"
+            href="https://wa.me/917678455973?text=Hi%2C%20I%20want%20a%20website"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center justify-center gap-3 px-10 py-4 text-sm uppercase tracking-[0.05em] font-bold text-accent-foreground bg-accent rounded-full transition-all duration-300 ease-out-quint hover:scale-105 shadow-[0_0_32px_-8px_var(--color-accent)]"
