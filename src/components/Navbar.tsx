@@ -9,6 +9,7 @@ import {
   AnimatePresence,
   useReducedMotion,
 } from "framer-motion";
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 
 const navLinks = [
@@ -34,6 +35,17 @@ export function Navbar() {
     lastScrollYRef.current = y;
     displayScrollY.set(Math.min((y / COMPACT_RANGE) * 100, 100));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const syncViewport = () => {
+      if (media.matches) setMobileOpen(false);
+    };
+
+    syncViewport();
+    media.addEventListener("change", syncViewport);
+    return () => media.removeEventListener("change", syncViewport);
+  }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const delta = latest - lastScrollYRef.current;
@@ -75,7 +87,48 @@ export function Navbar() {
   const boxShadow     = useTransform(shadowOpacity, (o) => `0 8px 32px rgba(0,0,0,${o})`);
 
   return (
-    <header className="fixed top-5 inset-x-0 z-50 flex justify-center px-4 md:px-6 pointer-events-none">
+    <header className="fixed top-3 left-0 z-50 flex w-[100dvw] max-w-[100dvw] justify-center px-3 pointer-events-none md:top-5 md:inset-x-0 md:w-auto md:max-w-none md:px-6">
+      <nav className="relative md:hidden w-[calc(100dvw-24px)] max-w-[calc(100dvw-24px)] min-w-0 flex items-center justify-between rounded-full border border-foreground/10 bg-surface/80 px-3 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.28)] backdrop-blur-xl backdrop-saturate-150 pointer-events-auto overflow-hidden">
+        <a
+          href="#"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+          aria-label="Planicle home"
+        >
+          <Image
+            src="/logo/Logo_white.svg"
+            alt=""
+            width={36}
+            height={28}
+            className="h-7 w-9 object-contain"
+          />
+        </a>
+
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-foreground/90 active:bg-foreground/10"
+          aria-label="Toggle navigation"
+          aria-expanded={mobileOpen}
+        >
+          <div className="relative flex h-3.5 w-5 flex-col justify-between">
+            <motion.span
+              animate={mobileOpen ? { rotate: 45, y: 5.5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="block h-[1.5px] w-full origin-center bg-foreground"
+            />
+            <motion.span
+              animate={mobileOpen ? { rotate: -45, y: -5.5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="block h-[1.5px] w-full origin-center bg-foreground"
+            />
+          </div>
+        </button>
+
+        <motion.div
+          style={{ scaleX: scrollYProgress, transformOrigin: "0% 50%" }}
+          className="absolute bottom-0 left-6 right-6 h-[2px] rounded-full bg-primary/60"
+        />
+      </nav>
+
       <motion.nav
         initial={prefersReduced ? false : { opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -91,7 +144,7 @@ export function Navbar() {
           borderColor: borderColor,
           boxShadow: boxShadow,
         }}
-        className="relative w-full flex items-center justify-between rounded-full backdrop-blur-xl backdrop-saturate-150 border pointer-events-auto overflow-hidden"
+        className="relative hidden w-full items-center justify-between rounded-full border backdrop-blur-xl backdrop-saturate-150 pointer-events-auto overflow-hidden md:flex"
       >
         {/* Logo */}
         <motion.a
@@ -149,27 +202,6 @@ export function Navbar() {
           Book Deal
         </motion.a>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden w-10 h-10 flex items-center justify-center"
-          aria-label="Toggle navigation"
-          aria-expanded={mobileOpen}
-        >
-          <div className="relative w-5 h-3.5 flex flex-col justify-between">
-            <motion.span
-              animate={mobileOpen ? { rotate: 45, y: 5.5 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="block w-full h-[1.5px] bg-foreground origin-center"
-            />
-            <motion.span
-              animate={mobileOpen ? { rotate: -45, y: -5.5 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="block w-full h-[1.5px] bg-foreground origin-center"
-            />
-          </div>
-        </button>
-
         {/* Scroll progress bar */}
         <motion.div
           style={{ scaleX: scrollYProgress, transformOrigin: "0% 50%" }}
@@ -185,7 +217,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-full mt-2 left-4 right-4 md:hidden bg-surface/95 backdrop-blur-2xl border border-border rounded-2xl p-6 shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
+            className="fixed top-[68px] left-3 right-3 max-h-[calc(100dvh-84px)] overflow-y-auto md:hidden bg-surface/95 backdrop-blur-2xl border border-border rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.5)] pointer-events-auto"
           >
             <div className="flex flex-col gap-1">
               {navLinks.map((link) => (
