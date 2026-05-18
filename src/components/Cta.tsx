@@ -81,7 +81,7 @@ export function Cta() {
     <section
       ref={sectionRef}
       id="cta"
-      className="relative py-32 md:py-48 px-6 md:px-12 overflow-hidden"
+      className="relative overflow-hidden px-5 py-24 sm:px-6 md:px-12 md:py-48"
     >
       {/* ShaderGradient reprise — more intense, urgent colors */}
       {shaderMounted && (
@@ -122,21 +122,21 @@ export function Cta() {
       {/* Fallback ambient glow for reduced motion or before shader loads */}
       {!shaderMounted && (
         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[80vw] h-[30vw] bg-primary/8 blur-[160px] rounded-full" />
+          <div className="h-[55vw] w-[88vw] rounded-full bg-primary/8 blur-[160px] md:h-[30vw] md:w-[80vw]" />
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="relative z-10 mx-auto max-w-7xl">
         <div className="max-w-3xl">
           <motion.h2
             style={{ opacity: headingOpacity, y: headingY }}
-            className="font-display text-4xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-8"
+            className="mb-6 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:mb-8 md:text-7xl"
           >
             Ready to stand out?
           </motion.h2>
           <motion.p
             style={{ opacity: subOpacity, y: subY }}
-            className="text-text-secondary text-lg md:text-xl leading-relaxed mb-10 max-w-xl"
+            className="mb-8 max-w-xl text-base leading-relaxed text-text-secondary sm:text-lg md:mb-10 md:text-xl"
           >
             Let&apos;s discuss how a bespoke digital solution can bring you
             higher-value clients.
@@ -146,7 +146,7 @@ export function Cta() {
             href="https://wa.me/917678455973?text=Hi%2C%20I%20want%20a%20website"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center justify-center gap-3 px-10 py-4 text-sm uppercase tracking-[0.05em] font-bold text-accent-foreground bg-accent rounded-full transition-all duration-300 ease-out-quint hover:scale-105 shadow-[0_0_32px_-8px_var(--color-accent)]"
+            className="group inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full bg-accent px-8 py-4 text-center text-sm font-bold uppercase tracking-[0.05em] text-accent-foreground shadow-[0_0_32px_-8px_var(--color-accent)] transition-all duration-300 ease-out-quint hover:scale-105 sm:w-auto sm:px-10"
           >
             Book a Consultation
             <svg

@@ -1,8 +1,8 @@
 export function Footer() {
   return (
-    <footer className="py-16 px-6 md:px-12 border-t border-border">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-12 md:gap-16 mb-16">
+    <footer className="border-t border-border px-5 py-16 sm:px-6 md:px-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-16 grid grid-cols-1 gap-10 sm:gap-12 md:grid-cols-[1fr_auto_auto] md:gap-16">
           {/* Brand */}
           <div>
             <a
@@ -17,7 +17,7 @@ export function Footer() {
               />
               Planicle
             </a>
-            <p className="text-text-tertiary text-sm max-w-xs leading-relaxed">
+            <p className="max-w-xs text-sm leading-relaxed text-text-tertiary">
               Premium software for local businesses. No templates. No fluff. Just results.
             </p>
           </div>
@@ -77,7 +77,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col gap-3 border-t border-border pt-8 text-left sm:flex-row sm:items-center sm:justify-between sm:gap-4">
           <p className="text-xs text-text-tertiary">
             &copy; {new Date().getFullYear()} Planicle Labs. All rights
             reserved.
