@@ -5,10 +5,10 @@
 brand
 
 ## Users
-Local business owners and educated professionals (Doctors, Clinics, Architects, Interior Designers, Event Planners, Wedding Vendors, Real Estate Agents, Brokers, Travel Agents) who understand the need for a digital presence but need an expert partner to build it. They are busy, value quality, and need a solution that enhances their efficiency and user base.
+Startup founders and early-stage teams (Seed to Series B) who need a high-quality digital presence to establish credibility, attract investors, and acquire users. They move fast, value execution over talk, and need a technical partner who ships premium work without hand-holding.
 
 ## Product Purpose
-Planicle is a premium software agency that builds websites, apps, and (eventually) AI workflows. The purpose of this landing page is to immediately instill confidence, showcase technical excellence, and convince high-end local professionals to book a deal. It needs a "wow factor" that separates Planicle from cheap generic agencies.
+Planicle is a premium software agency that builds websites, apps, and (eventually) AI workflows. The purpose of this landing page is to immediately instill confidence, showcase technical excellence, and convince startup founders to book a deal. It needs a "wow factor" that separates Planicle from cheap generic agencies.
 
 ## Brand Personality
 Premium, confident, precise.

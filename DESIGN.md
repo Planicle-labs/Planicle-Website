@@ -1,145 +1,241 @@
----
-name: Planicle Labs
-description: Brand identity system — v1.0
-colors:
-  primary: "#5B48F5"
-  accent: "#00D4B8"
-  tint: "#A99DF8"
-  background: "#050505"
-  surface: "#18181B"
-  text-light: "#FDFDFA"
-typography:
-  display:
-    fontFamily: "Space Grotesk, sans-serif"
-    fontWeight: 700
-  heading:
-    fontFamily: "Space Grotesk, sans-serif"
-    fontWeight: 600
-  body:
-    fontFamily: "Inter, sans-serif"
-    fontWeight: 400
-  small:
-    fontFamily: "Inter, sans-serif"
-    fontWeight: 400
-  label:
-    fontFamily: "Inter, sans-serif"
-    fontWeight: 500
-    letterSpacing: "0.05em"
-rounded:
-  md: "8px"
-  full: "9999px"
-spacing:
-  sm: "8px"
-  md: "16px"
-components:
-  button-primary:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.text-light}"
-    rounded: "{rounded.md}"
-    padding: "12px 24px"
-  button-secondary:
-    backgroundColor: "transparent"
-    textColor: "{colors.text-light}"
-    rounded: "{rounded.md}"
-    padding: "12px 24px"
+# Planicle — Design System & Spec
+*Premium Software Agency · Landing Page*
+
 ---
 
-# Design System: Planicle Labs
+## 1. Brand Foundation
 
-## 1. Overview
+**Positioning:** Planicle is the technical partner that makes founders look credible before they've earned it. Every pixel communicates precision, taste, and execution speed.
 
-**Creative North Star: "Electric Precision"**
+**Design Concept — "The Mosaic"**
+The LEGO brick mosaic is the conceptual spine of the entire site. Just as a LEGO mosaic assembles thousands of precise units into a singular, premium art object, Planicle assembles precise systems—code, design, strategy—into products that founders are proud to show investors. Every section references this metaphor: structure built from modules, creativity within constraint.
 
-Planicle Labs is built on confidence, speed, and precision. It is a premium, no-fluff agency aesthetic that communicates technical excellence and momentum. The visual identity relies heavily on high-contrast dark modes (Space Black) punctuated by vibrant, energetic accents (Indigo Prime, Velocity Teal). It explicitly rejects generic SaaS templates, cheap "Fiverr-style" clutter, and cartoonish aesthetics in favor of a sleek, expensive feel. The "velocity stroke" in the logo represents forward motion, which is the core of the Planicle identity.
+---
 
-**Key Characteristics:**
-- High contrast, dark-first default.
-- Typography-led hierarchy using geometric display and utilitarian body fonts.
-- Punchy, neon-electric accents used sparingly for maximum impact.
-- Concise, direct, and confident copy.
+## 2. Color System
 
-## 2. Colors
+```
+Background (primary):   #F5F2ED   — warm off-white, aged canvas
+Background (elevated):  #EDEAE4   — section alternation, cards
+Ink (primary):          #1A1612   — near-black, editorial warmth
+Ink (secondary):        #6B6560   — muted warm gray
+Ink (tertiary):         #A09A94   — captions, metadata
 
-The palette is anchored in deep space, slashed by electric, high-velocity neon.
+LEGO Accent — Cobalt:   #1B4FD8   — hero dominant, primary CTA
+LEGO Accent — Gold:     #E8B84B   — stars, highlights, hover states
+LEGO Accent — Rust:     #C9441F   — urgency, pricing, second CTA
+LEGO Accent — Slate:    #4A6FA5   — secondary brick elements
+LEGO Neutral — Sand:    #C4B99A   — brick borders, texture lines
+LEGO Neutral — Ash:     #8C9BAB   — supporting mosaic tiles
 
-### Primary
-- **Indigo Prime** (`#5B48F5`): The core brand action color. Used for primary CTAs, the logo bowl, and high-emphasis moments.
+Brick Stud (CSS var):   rgba(255,255,255,0.18) overlay on colored tiles
+```
 
-### Secondary
-- **Velocity** (`#00D4B8`): The "forward motion" stroke. An electric teal used for micro-accents like the live status dot and the logo's velocity line.
+**Usage Rule:** The off-white canvas is the silence between notes. LEGO accents appear sparingly—only on interactive elements, hero art, and intentional section "punctuation." No gradients except within the mosaic art rendering.
 
-### Tertiary
-- **Indigo Soft** (`#A99DF8`): A supporting highlight color, used for subtle emphasis or secondary interactive states.
-
-### Neutral
-- **Space Black** (`#050505`): The void. The primary background for the dark theme.
-- **Deep Surface** (`#18181B`): Used for elevated cards, subtle depth, and structural separation on dark backgrounds.
-- **Ghost White** (`#FDFDFA`): The primary text color on dark backgrounds, and the primary background for the light theme.
-
-### Named Rules
-**The Velocity Rule.** The Velocity teal (`#00D4B8`) is a micro-accent. It is never used as a large background fill. It is the spark, not the fire.
+---
 
 ## 3. Typography
 
-**Display Font:** Space Grotesk (with sans-serif fallback)
-**Body Font:** Inter (with sans-serif fallback)
-**Label/Mono Font:** Inter
+```
+Display / Hero:      "Cormorant Garamond" — weight 300–600
+                     Optical size large. Tracking –0.03em at 80px+.
+                     Used for: H1, H2, pull quotes, hero tagline.
 
-**Character:** A confident, geometric display font paired with a highly legible, utilitarian body font. It feels engineered and precise.
+Heading / Labels:    "DM Sans" — weight 400–500
+                     Tracking 0.08em (ALL CAPS for labels/metadata)
+                     Used for: nav, section labels, body H3, CTAs.
 
-### Hierarchy
-- **Display** (700, fluid sizing, tight line-height): Hero headlines. E.g., "Build fast. Look sharp."
-- **Heading** (600, large, tight line-height): Section titles. E.g., "We build websites that work."
-- **Body** (400, base size, relaxed line-height): Explanatory text. E.g., "Local businesses deserve a serious online presence." Max 65-75ch line length.
-- **Small** (400, small size): Disclaimers and supporting details. E.g., "Starting at ₹8,000 · Delivered in 7 days".
-- **Label** (500, uppercase, 0.05em tracking): Navigation and micro-copy. E.g., "SERVICES · PACKAGES".
+Body:                "DM Sans" — weight 400, size 16–18px
+                     Line-height 1.65. Max-width 62ch.
 
-### Named Rules
-**The Typography-First Rule.** Hierarchy is established through scale and weight contrast (≥1.25 ratio between steps), not just color. Let the typography do the heavy lifting.
+Mono / Technical:    "JetBrains Mono" — weight 400
+                     Used sparingly: code references, metric callouts.
+```
 
-## 4. Elevation
+**Type Scale:**
+```
+--t-xs:    11px / 1.4  — metadata, brick coords
+--t-sm:    14px / 1.5  — captions, nav
+--t-base:  17px / 1.65 — body
+--t-lg:    22px / 1.45 — lead copy
+--t-xl:    32px / 1.2  — H3
+--t-2xl:   48px / 1.1  — H2
+--t-3xl:   72px / 1.0  — H1 desktop
+--t-hero: 108px / 0.95 — hero display
+```
 
-Planicle uses flat, tonal layering rather than heavy drop shadows. Depth is conveyed by contrasting Space Black against Deep Surface. 
+---
 
-### Shadow Vocabulary
-- **None**: Surfaces are flat at rest.
+## 4. Spacing & Grid
 
-### Named Rules
-**The Flat-By-Default Rule.** Surfaces are flat and border-driven. Shadows, if ever used, appear only as a diffuse, ambient response to state (hover, focus), not as structural depth.
+**Base unit:** 8px  
+**Grid:** 12-col, max-width 1280px, gutters 24px (mobile: 16px)  
+**Section rhythm:** `padding-block: clamp(80px, 12vw, 160px)`
 
-## 5. Components
+```
+--sp-1:   8px
+--sp-2:  16px
+--sp-3:  24px
+--sp-4:  32px
+--sp-6:  48px
+--sp-8:  64px
+--sp-12: 96px
+--sp-16: 128px
+```
 
-Components are tactile, precise, and confident.
+---
 
-### Buttons
-- **Shape:** Gently curved edges (8px radius).
-- **Primary:** Indigo Prime background, Ghost White text. Solid, unmissable.
-- **Hover / Focus:** Slight upward translation and subtle background brightening.
-- **Secondary / Ghost:** Transparent background with a faint border, text color adapts to theme (Ghost White on dark, Space Black on light).
+## 5. The LEGO Brick Component
 
-### Pill / Status Indicator
-- **Style:** Fully rounded (9999px radius), dark indigo or faint teal background depending on theme.
-- **Content:** Features a glowing Velocity teal dot alongside small Inter text (e.g., "Now onboarding new clients").
+The atomic unit of Planicle's visual language. Every "brick" renders a 1×1 LEGO stud tile.
 
-### Navigation
-- **Style:** Clean, text-based labels using the Inter 500 caps style. 
-- **States:** Hover states should feel crisp, likely using a subtle color shift or an underline reveal.
+**Brick Anatomy (CSS):**
+```css
+.brick {
+  width: var(--brick-size, 20px);
+  height: var(--brick-size, 20px);
+  background: var(--brick-color);
+  border-radius: 2px;
+  position: relative;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.18), 
+              inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.brick::after {   /* stud */
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 55%; height: 55%;
+  border-radius: 50%;
+  background: inherit;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.25),
+              inset 0 1px 0 rgba(255,255,255,0.2);
+}
+```
 
-## 6. Do's and Don'ts
+**Mosaic Grid:** Bricks assemble in a CSS Grid of `N×M` at 20px cells desktop, 12px mobile. The mosaic renders as a `<canvas>` element or CSS-grid of colored divs, pixelating a reference image at 60×60 resolution using the defined palette.
 
-Maintain the premium, confident aesthetic by strictly enforcing these boundaries.
+---
 
-### Do:
-- **Do** use Space Black (`#050505`) as the default background to convey a premium, expensive feel.
-- **Do** maintain the "velocity stroke" in the logo mark; it represents forward motion and must never be removed.
-- **Do** keep copy direct and confident ("Two developers. Zero fluff. One goal — your growth.").
-- **Do** ensure clear space around the logo equal to the height of the "P" bowl on all sides.
+## 6. Motion System
 
-### Don't:
-- **Don't** use generic SaaS templates or cheap "Fiverr-style" cluttered layouts.
-- **Don't** use overly playful or cartoonish aesthetics.
-- **Don't** use side-stripe borders (`border-left` or `border-right` greater than 1px) as a colored accent.
-- **Don't** use gradient text (`background-clip: text`) combined with a gradient background.
-- **Don't** use glassmorphism as a default treatment; rely on solid, opaque surfaces (`#18181B`).
-- **Don't** use identical card grids repeated endlessly.
-- **Don't** shrink the logo below the minimum display size of 20px.
+**Philosophy:** Exponential ease-out only. No bounce. No spring physics. Movement should feel like a precision instrument settling into place, not a rubber toy.
+
+```
+--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+--ease-out-circ: cubic-bezier(0, 0.55, 0.45, 1);
+--duration-fast:   180ms
+--duration-base:   320ms
+--duration-slow:   600ms
+--duration-cinematic: 1200ms
+```
+
+**Scroll System:** CSS `scroll-snap-type: y mandatory` on the viewport container. Each `<section>` is `scroll-snap-align: start` with `height: 100svh`. Snap triggers section-level entrance animations via IntersectionObserver.
+
+**Core Animations:**
+- **Brick Build-in:** On section entry, mosaic tiles reveal in a wave pattern (top-left to bottom-right), each brick fading + scaling from 0.6→1 with 8ms staggered delay per tile. Total build time ≤ 800ms.
+- **Text Reveal:** Lines clip-path from `inset(0 100% 0 0)` → `inset(0 0% 0 0)`. Stagger 60ms per line.
+- **Hover — CTA brick:** Individual brick studs lift +2px (translateY) on hover of the button container, radiating outward from cursor.
+- **Cursor:** Custom cursor: 12px filled circle in `--cobalt`, trailing a 32px ring that follows with 80ms lag.
+
+---
+
+## 7. Page Structure
+
+```
+01 / NAV         — Sticky. Logo left (wordmark in Cormorant). Links center.
+                   CTA right: "Book a Call" (brick-filled button).
+                   Blurs background at scroll >40px.
+
+02 / HERO        — Full viewport snap section. 
+                   LEFT: H1 headline (2–3 words, display serif, 108px).
+                   Subline in DM Sans 22px muted.
+                   Primary CTA below.
+                   RIGHT: 60×60 LEGO mosaic art piece (canvas render).
+                   Mosaic animates in brick-by-brick on load.
+
+03 / CREDIBILITY — "Trusted by" logos in a horizontal marquee.
+                   Section label: "CLIENTS" in caps/mono.
+                   Half-height snap section.
+
+04 / SERVICES    — 3-column grid. Each card has a small LEGO mosaic icon
+                   (8×8 grid) in accent color. Heading + 2-line description.
+                   Cards appear staggered on snap entry.
+
+05 / WORK        — Full-bleed project showcase. Left: project details.
+                   Right: browser mockup with LEGO frame border 
+                   (4-brick-wide colored border around the screenshot).
+                   Alternates layout per project.
+
+06 / PROCESS     — Horizontal timeline of 4 steps. Each step has a 
+                   numbered brick (large 3D-rendered single LEGO stud).
+                   Timeline line is a dotted path in --sand.
+
+07 / SOCIAL PROOF — 2-column masonry of founder testimonials.
+                    Pull quote in Cormorant 32px. Attribution in mono.
+
+08 / PRICING     — Clean 3-column. One card has LEGO brick accent border
+                   in --cobalt (the recommended tier). Pricing in display type.
+
+09 / CTA CLOSE   — Full-width dark inversion section (#1A1612 bg).
+                   Hero-scale headline in off-white serif.
+                   Single CTA. Background: sparse animated brick grid.
+
+10 / FOOTER      — Minimal. Logo + nav links + legal. No noise.
+```
+
+---
+
+## 8. Component Specs
+
+**Primary Button:**
+```
+Background: #1B4FD8  |  Text: #F5F2ED  |  Font: DM Sans 500 14px CAPS  
+Padding: 14px 28px  |  Border-radius: 4px (brick-corner, not pill)
+Hover: background lightens 8%, brick stud animation on top surface
+```
+
+**Secondary Button:**
+```
+Background: transparent  |  Border: 1.5px solid #1A1612  
+Hover: fills with --sand, no radius change
+```
+
+**Card:**
+```
+Background: #EDEAE4  |  Border: 1px solid rgba(26,22,18,0.08)
+Border-radius: 6px  |  Padding: 32px  
+Hover: translateY(-4px) + shadow deepens — duration 320ms ease-out-expo
+```
+
+**Section Label:**
+```
+Font: DM Sans 500 11px  |  Color: --ink-tertiary  
+Letter-spacing: 0.12em  |  ALL CAPS  |  Margin-bottom: 16px
+Preceded by a 20px × 2px #E8B84B line
+```
+
+---
+
+## 9. Do / Don't
+
+| ✓ DO | ✗ DON'T |
+|------|---------|
+| Let white space breathe | Fill every section with content |
+| Restrict LEGO accents to deliberate moments | Scatter bricks randomly as decoration |
+| Use serif display type at large scale | Use serif for body copy |
+| Animate brick builds once on entry | Loop or auto-play mosaic animations |
+| Square / rectangular crop ratios | Rounded pill shapes on major containers |
+| 2–4 word headline punches | Long explanatory hero copy |
+| Cobalt + Gold as the accent pair | More than 3 accent colors visible at once |
+
+---
+
+## 10. Asset Directions
+
+**Hero Mosaic:** Render a ~60×60 pixel mosaic of a laptop/code editor scene OR an abstract "growth chart" in LEGO palette. Cobalt dominates (sky/background), Gold for highlights (cursor, key pixels). Minimum 3,600 individual brick cells visible.
+
+**Service Icons:** 8×8 brick icons. Each service gets a unique single-accent-color icon on a sand background tile. Pixel-art style: a checkmark, a rocket, a node graph — keep to 1 color + transparent.
+
+**Process Numbers:** Large single LEGO studs (3D-illustrated or CSS), numbered 01–04 in --gold on --cobalt tiles.
