@@ -14,6 +14,7 @@ import { useState, useRef, useEffect } from "react";
 
 const navLinks = [
   { href: "#services", label: "Services" },
+  { href: "#process", label: "Process" },
   { href: "#why-us", label: "Why Us" },
   { href: "#pricing", label: "Pricing" },
 ];
@@ -25,6 +26,72 @@ export function Navbar() {
   const { scrollY, scrollYProgress } = useScroll();
   const [mobileOpen, setMobileOpen] = useState(false);
   const prefersReduced = useReducedMotion();
+
+  const smoothScrollTo = (targetY: number, duration: number = 800) => {
+    const startY = window.scrollY;
+    const difference = targetY - startY;
+    const startTime = performance.now();
+
+    const easeOutExpo = (t: number) => {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    };
+
+    const step = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      window.scrollTo(0, startY + difference * easeOutExpo(progress));
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement> | null, href: string) => {
+    if (e) e.preventDefault();
+    setMobileOpen(false);
+
+    if (href === "#" || href === "") {
+      if (prefersReduced) {
+        window.scrollTo(0, 0);
+      } else {
+        smoothScrollTo(0, 800);
+      }
+      return;
+    }
+
+    const targetId = href.replace("#", "");
+    const elem = document.getElementById(targetId);
+    if (elem) {
+      const targetY = elem.getBoundingClientRect().top + window.scrollY;
+      if (prefersReduced) {
+        window.scrollTo(0, targetY);
+      } else {
+        smoothScrollTo(targetY, 800);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (prefersReduced) return;
+
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest("a");
+      if (!target) return;
+
+      const href = target.getAttribute("href");
+      if (href && href.startsWith("#")) {
+        e.preventDefault();
+        handleScroll(null, href);
+      }
+    };
+
+    window.addEventListener("click", handleAnchorClick);
+    return () => window.removeEventListener("click", handleAnchorClick);
+  }, [prefersReduced]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const displayScrollY = useMotionValue(0);
   const lastScrollYRef = useRef(0);
@@ -60,7 +127,7 @@ export function Navbar() {
   });
 
   // Layout
-  const navMaxWidth = useTransform(displayScrollY, [0, 100], [1024, 640]);
+  const navMaxWidth = useTransform(displayScrollY, [0, 100], [1024, 740]);
   const navPaddingX = useTransform(displayScrollY, [0, 100], [20, 16]);
   const navPaddingY = useTransform(displayScrollY, [0, 100], [12, 8]);
   const navGap = useTransform(displayScrollY, [0, 100], [32, 16]);
@@ -196,6 +263,7 @@ export function Navbar() {
             <motion.a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleScroll(e, link.href)}
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.97 }}
               className="px-4 py-2 text-[11px] uppercase tracking-[0.05em] font-medium transition-colors duration-200 whitespace-nowrap"
@@ -270,7 +338,7 @@ export function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => handleScroll(e, link.href)}
                   className="px-4 py-3 text-sm font-medium transition-colors"
                   style={{
                     color: "var(--color-ink-secondary)",
