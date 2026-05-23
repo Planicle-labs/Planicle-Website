@@ -4,8 +4,15 @@ import Image from "next/image";
 
 const navLinks = [
   { href: "#services", label: "Services" },
+  { href: "#process", label: "Process" },
   { href: "#why-us", label: "Why Us" },
   { href: "#pricing", label: "Pricing" },
+];
+
+const socialLinks = [
+  { href: "https://wa.me/917678455973?text=Hi%2C%20I%20want%20to%20work%20with%20Planicle", label: "WhatsApp" },
+  { href: "https://github.com", label: "GitHub" },
+  { href: "https://linkedin.com", label: "LinkedIn" },
 ];
 
 export function FooterSection() {
@@ -15,159 +22,151 @@ export function FooterSection() {
     <footer
       id="footer"
       style={{
-        background: "var(--color-ink)",
-        paddingBlock: "48px",
+        background: "#0B0F17",
+        paddingTop: "56px",
+        paddingBottom: "36px",
         borderTop: "1px solid rgba(245, 242, 237, 0.06)",
+        position: "relative",
       }}
     >
-      <div
-        className="container-narrow"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "32px",
-        }}
-      >
-        {/* Top row */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "24px",
-          }}
-        >
-          {/* Logo */}
-          <a
-            href="#"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              textDecoration: "none",
-            }}
-            aria-label="Planicle home"
-          >
-            <Image
-              src="/logo/Logo_white.svg"
-              alt=""
-              width={32}
-              height={24}
-              style={{ height: "24px", width: "auto" }}
-            />
-            <span
-              style={{
-                fontFamily: "var(--font-display), 'Cormorant Garamond', serif",
-                fontSize: "20px",
-                fontWeight: 500,
-                color: "var(--color-canvas)",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Planicle
-            </span>
-          </a>
-
-          {/* Nav links */}
-          <nav
-            style={{
-              display: "flex",
-              gap: "24px",
-              flexWrap: "wrap",
-            }}
-            aria-label="Footer navigation"
-          >
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                style={{
-                  fontFamily: "var(--font-body), 'DM Sans', sans-serif",
-                  fontSize: "13px",
-                  fontWeight: 400,
-                  letterSpacing: "0.04em",
-                  textTransform: "uppercase",
-                  color: "var(--color-ash)",
-                  textDecoration: "none",
-                  transition: "color 200ms ease",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "var(--color-canvas)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "var(--color-ash)")
-                }
-              >
-                {link.label}
-              </a>
-            ))}
+      <div className="container-narrow flex flex-col">
+        
+        {/* Main 3-Column Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-10 gap-x-12">
+          
+          {/* Column 1: Logo & Vision (span 5) */}
+          <div className="md:col-span-5 flex flex-col items-start text-left">
             <a
-              href="https://wa.me/917678455973?text=Hi%2C%20I%20want%20a%20website"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#"
               style={{
-                fontFamily: "var(--font-body), 'DM Sans', sans-serif",
-                fontSize: "13px",
-                fontWeight: 400,
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                color: "var(--color-ash)",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
                 textDecoration: "none",
-                transition: "color 200ms ease",
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = "var(--color-canvas)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "var(--color-ash)")
-              }
+              aria-label="Planicle home"
+              className="mb-6"
             >
-              Contact
+              <Image
+                src="/logo/Logo_white.svg"
+                alt=""
+                width={24}
+                height={24}
+                unoptimized
+                style={{ height: "24px", width: "auto" }}
+              />
+              <span
+                style={{
+                  fontFamily: "var(--font-display), 'Cormorant Garamond', serif",
+                  fontSize: "20px",
+                  fontWeight: 500,
+                  color: "var(--color-canvas)",
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                Planicle
+              </span>
             </a>
-          </nav>
+
+            <p
+              className="font-body text-sm max-w-[32ch] leading-relaxed"
+              style={{ color: "var(--color-ash)" }}
+            >
+              Design-led engineering for high-growth startups. We turn product blueprints into premium software.
+            </p>
+          </div>
+
+          {/* Column 2: Navigation & Links (span 4) */}
+          <div className="md:col-span-4 grid grid-cols-2 gap-8 text-left">
+            {/* Sitemap Links */}
+            <div className="flex flex-col gap-4">
+              <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">
+                Sitemap
+              </span>
+              <nav className="flex flex-col gap-3">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="font-body text-xs text-gray-400 hover:text-white transition-colors duration-200"
+                    style={{ textDecoration: "none" }}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            {/* Social Connection Links */}
+            <div className="flex flex-col gap-4">
+              <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">
+                Connect
+              </span>
+              <nav className="flex flex-col gap-3">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-body text-xs text-gray-400 hover:text-white transition-colors duration-200"
+                    style={{ textDecoration: "none" }}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          </div>
+
+          {/* Column 3: Contact & Location (span 3) */}
+          <div className="md:col-span-3 flex flex-col items-start text-left gap-4">
+            <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">
+              Location
+            </span>
+            <div className="font-body text-xs text-gray-400 leading-relaxed">
+              Based in New Delhi, India.
+              <br />
+              Collaborating globally.
+            </div>
+            <a
+              href="mailto:hello@planicle.com"
+              className="font-mono text-xs text-blue-400 hover:text-blue-300 transition-colors mt-2"
+              style={{ textDecoration: "none" }}
+            >
+              hello@planicle.com
+            </a>
+          </div>
+
         </div>
 
-        {/* Divider */}
+        {/* Horizontal Divider */}
         <div
           style={{
             height: "1px",
             background: "rgba(245, 242, 237, 0.06)",
+            marginTop: "40px",
+            marginBottom: "24px",
           }}
         />
 
-        {/* Bottom row */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "16px",
-          }}
-        >
+        {/* Footer Metadata Bottom Row */}
+        <div className="flex flex-col sm:flex-row justify-between items-center">
           <p
-            style={{
-              fontFamily: "var(--font-body), 'DM Sans', sans-serif",
-              fontSize: "12px",
-              color: "rgba(160, 154, 148, 0.6)",
-              margin: 0,
-            }}
+            className="font-body text-[11px] margin-0"
+            style={{ color: "rgba(160, 154, 148, 0.5)" }}
           >
             © {year} Planicle. All rights reserved.
           </p>
 
           <p
-            style={{
-              fontFamily: "var(--font-mono), 'JetBrains Mono', monospace",
-              fontSize: "11px",
-              color: "rgba(160, 154, 148, 0.4)",
-              margin: 0,
-            }}
+            className="font-mono text-[10px] margin-0 tracking-wider"
+            style={{ color: "rgba(160, 154, 148, 0.4)" }}
           >
-            Built with precision.
+            BUILD RESOLUTION: 100% (STABLE BUILD v2.4.0)
           </p>
         </div>
+
       </div>
     </footer>
   );
