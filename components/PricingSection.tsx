@@ -84,7 +84,18 @@ const DEBRIS_COLORS = [
   "#C9441F", "#FFFFFF",
 ];
 
+function mulberry32(seed: number) {
+  return () => {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 function generateDebris(): DebrisPiece[] {
+  const rand = mulberry32(42);
   const pieces: DebrisPiece[] = [];
   // Bottom-left cluster
   const bottomLeft: [string, string][] = [
@@ -111,10 +122,10 @@ function generateDebris(): DebrisPiece[] {
     pieces.push({
       id: i,
       x, y,
-      size: 8 + Math.random() * 14,
+      size: 8 + rand() * 14,
       color: DEBRIS_COLORS[i % DEBRIS_COLORS.length],
-      rotation: Math.random() * 360,
-      delay: Math.random() * 2,
+      rotation: rand() * 360,
+      delay: rand() * 2,
       type: types[i % types.length],
     });
   });
@@ -204,7 +215,7 @@ function ScatteredDebris() {
             y: [0, -8, 4],
           }}
           transition={{
-            duration: prefersReduced ? 0 : 5 + Math.random() * 4,
+            duration: prefersReduced ? 0 : 5 + p.delay * 2,
             delay: p.delay,
             repeat: Infinity,
             repeatType: "loop",
@@ -303,38 +314,27 @@ const GROWTH_BORDERS: CardBorderDef[] = [
   {
     anchor: "top-left",
     bricks: [
-      // 5-col top row
+      // 2-row compact cluster — stays above GROWTH label
       { x: 0, y: 0, w: 1, h: 1, c: DB },
       { x: 1, y: 0, w: 2, h: 1, c: MB },
       { x: 3, y: 0, w: 1, h: 1, c: SB },
-      { x: 4, y: 0, w: 1, h: 1, c: DB },
-      // Row 1 — offset
-      { x: 0, y: 1, w: 2, h: 1, c: SB },
-      { x: 2, y: 1, w: 1, h: 1, c: DB },
-      { x: 3, y: 1, w: 1, h: 1, c: MB },
-      // Row 2 — narrowing
-      { x: 0, y: 2, w: 1, h: 1, c: MB },
-      { x: 1, y: 2, w: 2, h: 1, c: DB },
-      // Row 3 — tip
-      { x: 0, y: 3, w: 1, h: 1, c: DB },
-      { x: 1, y: 3, w: 1, h: 1, c: SB },
+      // Row 1 — shorter, offset
+      { x: 0, y: 1, w: 1, h: 1, c: SB },
+      { x: 1, y: 1, w: 1, h: 1, c: DB },
+      { x: 2, y: 1, w: 1, h: 1, c: MB },
     ],
   },
   {
     anchor: "top-right",
     bricks: [
-      // 2-wide mini-clusters with gaps
       // Group 1
-      { x: 0, y: 3, w: 1, h: 1, c: DB },
-      { x: 1, y: 3, w: 1, h: 1, c: MB },
-      { x: 0, y: 4, w: 1, h: 1, c: SB },
+      { x: 0, y: 5, w: 1, h: 1, c: DB },
+      { x: 1, y: 5, w: 1, h: 1, c: MB },
+      { x: 0, y: 6, w: 1, h: 1, c: SB },
       // Group 2
-      { x: 0, y: 8, w: 1, h: 1, c: MB },
-      { x: 1, y: 8, w: 1, h: 1, c: DB },
-      { x: 1, y: 9, w: 1, h: 1, c: SB },
-      // Group 3
-      { x: 0, y: 14, w: 1, h: 1, c: DB },
-      { x: 1, y: 14, w: 1, h: 1, c: MB },
+      { x: 0, y: 11, w: 1, h: 1, c: MB },
+      { x: 1, y: 11, w: 1, h: 1, c: DB },
+      { x: 1, y: 12, w: 1, h: 1, c: SB },
     ],
   },
   {
