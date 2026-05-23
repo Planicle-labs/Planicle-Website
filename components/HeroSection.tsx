@@ -200,7 +200,17 @@ function ParticleShape({ particle }: { particle: Particle }) {
 }
 
 function FloatingDebris() {
-  const [particles] = useState(() => generateParticles(42));
+  const [mounted, setMounted] = useState(false);
+  const [particles, setParticles] = useState<Particle[]>([]);
+
+  useEffect(() => {
+    setParticles(generateParticles(42));
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div

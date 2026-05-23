@@ -71,16 +71,26 @@ export function WhyUsSection() {
       style={{
         background: "var(--color-canvas)",
         position: "relative",
+        overflowX: "hidden",
       }}
     >
-      <div className="container-narrow" ref={containerRef}>
+      <div className="container-narrow" ref={containerRef} style={{ overflow: "hidden" }}>
         <SectionLabel>Why Planicle</SectionLabel>
 
         {/* Layout Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mt-6">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gap: "48px",
+            alignItems: "center",
+            marginTop: "24px",
+          }}
+          className="why-us-layout"
+        >
           
           {/* Left Column: Editorial & Selector Buttons */}
-          <div className="lg:col-span-5 flex flex-col">
+          <div style={{ minWidth: 0, display: "flex", flexDirection: "column" }}>
             <motion.div
               initial={prefersReduced ? false : "hidden"}
               animate={isInView ? "visible" : "hidden"}
@@ -196,9 +206,9 @@ export function WhyUsSection() {
           </div>
 
           {/* Right Column: Interactive Visualization Panel */}
-          <div className="lg:col-span-7 flex justify-center items-center w-full min-h-[460px] lg:min-h-[500px]">
+          <div style={{ minWidth: 0, display: "flex", justifyContent: "center", alignItems: "center", width: "100%", minHeight: "460px", overflow: "hidden" }}>
             <div
-              className="relative w-full aspect-[4/3] rounded-xl flex flex-col items-center justify-center p-8 overflow-hidden select-none"
+              className="relative w-full max-w-full min-h-[400px] lg:min-h-[460px] rounded-xl flex flex-col items-center justify-center p-8 overflow-hidden select-none"
               style={{
                 background: "var(--color-canvas-elevated)",
                 border: "1px solid rgba(26, 22, 18, 0.08)",
@@ -541,8 +551,9 @@ export function WhyUsSection() {
 
       <style jsx>{`
         @media (min-width: 1024px) {
-          .why-us-grid {
-            grid-template-columns: 1fr 1fr !important;
+          .why-us-layout {
+            grid-template-columns: 5fr 7fr !important;
+            gap: 80px !important;
           }
         }
       `}</style>

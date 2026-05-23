@@ -53,7 +53,6 @@ export function FooterSection() {
                 width={24}
                 height={24}
                 unoptimized
-                style={{ height: "24px", width: "auto" }}
               />
               <span
                 style={{
