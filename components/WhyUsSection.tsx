@@ -227,22 +227,22 @@ export function WhyUsSection() {
                   className="w-full h-full flex flex-col justify-between"
                 >
                   <div className="flex justify-between items-center mb-4">
-                    <span className="font-mono text-xs text-gray-500 uppercase tracking-widest">
+                    <span className="font-mono text-xs text-[var(--color-ink-secondary)] uppercase tracking-widest">
                       PREMIUM DASHBOARD DEMO
                     </span>
-                    <span className="font-mono text-[10px] text-amber-600 font-bold tracking-wide">
+                    <span className="font-mono text-[10px] text-[var(--color-gold)] font-bold tracking-wide">
                       EXPONENTIAL TRACTION
                     </span>
                   </div>
 
                   {/* Browser Mockup Box */}
-                  <div className="flex-1 bg-white border border-gray-200/80 rounded-lg shadow-sm overflow-hidden flex flex-col">
+                  <div className="flex-1 bg-[var(--color-canvas)] border border-[rgba(26,22,18,0.08)] rounded-lg shadow-sm overflow-hidden flex flex-col">
                     {/* Browser Header */}
-                    <div className="h-7 bg-gray-50 border-b border-gray-150 flex items-center px-4 gap-1.5">
-                      <div className="w-2 h-2 rounded-full bg-red-400" />
-                      <div className="w-2 h-2 rounded-full bg-yellow-400" />
-                      <div className="w-2 h-2 rounded-full bg-green-400" />
-                      <div className="mx-auto bg-gray-200/50 rounded px-8 py-0.5 text-[8px] font-mono text-gray-400 uppercase tracking-wider">
+                    <div className="h-7 bg-[var(--color-canvas-elevated)] border-b border-[rgba(26,22,18,0.08)] flex items-center px-4 gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-rust)]/80" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-gold)]/80" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-slate-accent)]/80" />
+                      <div className="mx-auto bg-[rgba(26,22,18,0.04)] rounded px-8 py-0.5 text-[8px] font-mono text-[var(--color-ink-tertiary)] uppercase tracking-wider">
                         localhost:3000/dashboard
                       </div>
                     </div>
@@ -251,13 +251,13 @@ export function WhyUsSection() {
                     <div className="p-6 flex-1 flex flex-col justify-between relative">
                       {/* Metric Card Overlay */}
                       <div className="absolute top-4 left-6 flex flex-col">
-                        <span className="font-mono text-[9px] text-gray-400 uppercase">MONTHLY ACTIVE USERS</span>
-                        <span className="font-display text-2xl text-gray-800 font-semibold tracking-tight">+342% MAU</span>
+                        <span className="font-mono text-[9px] text-[var(--color-ink-tertiary)] uppercase">MONTHLY ACTIVE USERS</span>
+                        <span className="font-display text-2xl text-[var(--color-ink)] font-semibold tracking-tight">+342% MAU</span>
                       </div>
 
                       {/* Sparkle star */}
                       <div className="absolute top-4 right-6 animate-pulse">
-                        <svg className="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-5 h-5 text-[var(--color-gold)]" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M12 2l2.4 7.4h7.6l-6.1 4.5 2.3 7.4-6.2-4.6-6.2 4.6 2.3-7.4-6.1-4.5h7.6z" />
                         </svg>
                       </div>
@@ -282,12 +282,11 @@ export function WhyUsSection() {
                                   ease: [0.16, 1, 0.3, 1],
                                   delay: prefersReduced ? 0 : (idx * 100 + brickIdx * 40) / 1000,
                                 }}
-                                className="brick"
+                                className="brick-2x1"
                                 style={{
                                   "--brick-color": col.color,
-                                  "--brick-size": "16px",
-                                  width: "28px",
-                                  height: "14px",
+                                  "--brick-width": "28px",
+                                  "--brick-height": "14px",
                                 } as React.CSSProperties}
                               />
                             ))}
@@ -313,16 +312,16 @@ export function WhyUsSection() {
                   onMouseLeave={() => setIsWallCompleted(false)}
                 >
                   <div className="flex justify-between items-center mb-4">
-                    <span className="font-mono text-xs text-gray-500 uppercase tracking-widest">
+                    <span className="font-mono text-xs text-[var(--color-ink-secondary)] uppercase tracking-widest">
                       FOUNDATION INTEGRITY
                     </span>
-                    <span className="font-mono text-xs text-gray-400">
+                    <span className="font-mono text-xs text-[var(--color-ink-tertiary)]">
                       Hover to snap final brick
                     </span>
                   </div>
 
                   {/* Interlocking Wall Frame */}
-                  <div className="flex-1 flex flex-col items-center justify-center relative p-6 bg-white border border-gray-200/80 rounded-lg shadow-sm">
+                  <div className="flex-1 flex flex-col items-center justify-center relative p-6 bg-[var(--color-canvas)] border border-[rgba(26, 22, 18, 0.08)] rounded-lg shadow-sm">
                     
                     {/* Visualizer Area */}
                     <div className="relative w-[180px] h-[160px] flex flex-col justify-end">
@@ -331,7 +330,7 @@ export function WhyUsSection() {
                       <div className="flex flex-col gap-1 items-center">
                         {/* Row 3 (Top) */}
                         <div className="flex gap-1">
-                          <div className="brick" style={{ "--brick-color": "var(--color-slate-accent)", "--brick-size": "24px", width: "56px", height: "22px" } as React.CSSProperties} />
+                          <div className="brick-2x1" style={{ "--brick-color": "var(--color-slate-accent)", "--brick-width": "56px", "--brick-height": "22px" } as React.CSSProperties} />
                           
                           {/* Empty space for the gold brick (width: 56px, gap: 1) */}
                           <div className="w-[56px] h-[22px] relative">
@@ -340,14 +339,14 @@ export function WhyUsSection() {
                               className="absolute inset-0 border rounded transition-all duration-300" 
                               style={{
                                 borderStyle: isWallCompleted ? "solid" : "dashed",
-                                borderColor: isWallCompleted ? "rgba(16, 185, 129, 0.4)" : "#D1D5DB",
+                                borderColor: isWallCompleted ? "rgba(16, 185, 129, 0.4)" : "var(--color-sand)",
                                 background: isWallCompleted ? "rgba(16, 185, 129, 0.05)" : "transparent",
                               }}
                             />
                             
                             {/* Gold Glow behind brick when snapped */}
                             <div
-                              className="absolute inset-0 rounded bg-amber-400/20 blur-md pointer-events-none transition-all duration-300"
+                              className="absolute inset-0 rounded bg-[var(--color-gold)]/20 blur-md pointer-events-none transition-all duration-300"
                               style={{
                                 opacity: isWallCompleted ? 1 : 0,
                                 transform: isWallCompleted ? "scale(1.2)" : "scale(0.8)",
@@ -358,9 +357,9 @@ export function WhyUsSection() {
                             <span 
                               className="absolute -top-7 left-1/2 -translate-x-1/2 font-mono text-[9px] font-bold px-1.5 py-0.5 rounded whitespace-nowrap transition-all duration-300 shadow-sm"
                               style={{
-                                background: isWallCompleted ? "var(--color-cobalt)" : "#FFFBEB",
-                                color: isWallCompleted ? "#FFFFFF" : "#D97706",
-                                border: isWallCompleted ? "1px solid var(--color-cobalt)" : "1px solid #FDE68A",
+                                background: isWallCompleted ? "var(--color-cobalt)" : "var(--color-canvas-elevated)",
+                                color: isWallCompleted ? "var(--color-canvas)" : "var(--color-rust)",
+                                border: isWallCompleted ? "1px solid var(--color-cobalt)" : "1px solid var(--color-sand)",
                               }}
                             >
                               {isWallCompleted ? "✓ SECURED FOUNDATION" : "PRECISION FIT"}
@@ -374,35 +373,35 @@ export function WhyUsSection() {
                                   initial={{ x: 28, y: 11, scale: 0, opacity: 1 }}
                                   animate={{ x: -10, y: -25, scale: 1, opacity: 0 }}
                                   transition={{ duration: 0.55, ease: "easeOut" }}
-                                  className="absolute w-1.5 h-1.5 rounded-full bg-amber-400"
+                                  className="absolute w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]"
                                 />
                                 {/* Sparkle 2 */}
                                 <motion.div
                                   initial={{ x: 28, y: 11, scale: 0, opacity: 1 }}
                                   animate={{ x: 66, y: -25, scale: 1, opacity: 0 }}
                                   transition={{ duration: 0.55, ease: "easeOut" }}
-                                  className="absolute w-2 h-2 rounded bg-yellow-400 rotate-45"
+                                  className="absolute w-2 h-2 rounded bg-[var(--color-gold)] rotate-45"
                                 />
                                 {/* Sparkle 3 */}
                                 <motion.div
                                   initial={{ x: 28, y: 11, scale: 0, opacity: 1 }}
                                   animate={{ x: 5, y: -45, scale: 1, opacity: 0 }}
                                   transition={{ duration: 0.65, ease: "easeOut" }}
-                                  className="absolute w-1 h-1 rounded-full bg-amber-300"
+                                  className="absolute w-1 h-1 rounded-full bg-[var(--color-gold)]/85"
                                 />
                                 {/* Sparkle 4 */}
                                 <motion.div
                                   initial={{ x: 28, y: 11, scale: 0, opacity: 1 }}
                                   animate={{ x: 51, y: -45, scale: 1, opacity: 0 }}
                                   transition={{ duration: 0.65, ease: "easeOut" }}
-                                  className="absolute w-1.5 h-1.5 rounded-full bg-yellow-300"
+                                  className="absolute w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]/60"
                                 />
                                 {/* Sparkle 5 */}
                                 <motion.div
                                   initial={{ x: 28, y: 11, scale: 0, opacity: 1 }}
                                   animate={{ x: 28, y: -50, scale: 1.2, opacity: 0 }}
                                   transition={{ duration: 0.55, ease: "easeOut" }}
-                                  className="absolute w-2 h-2 rounded-full bg-amber-400"
+                                  className="absolute w-2 h-2 rounded-full bg-[var(--color-gold)]"
                                 />
                               </div>
                             )}
@@ -421,31 +420,44 @@ export function WhyUsSection() {
                               }}
                             >
                               <div
-                                className="brick shadow-lg"
+                                className="brick-2x1 shadow-lg"
                                 style={{
                                   "--brick-color": "var(--color-gold)",
-                                  "--brick-size": "24px",
-                                  width: "56px",
-                                  height: "22px",
+                                  "--brick-width": "56px",
+                                  "--brick-height": "22px",
                                 } as React.CSSProperties}
                               />
                             </div>
                           </div>
                           
-                          <div className="brick" style={{ "--brick-color": "var(--color-slate-accent)", "--brick-size": "24px", width: "56px", height: "22px" } as React.CSSProperties} />
+                          <div className="brick-2x1" style={{ "--brick-color": "var(--color-slate-accent)", "--brick-width": "56px", "--brick-height": "22px" } as React.CSSProperties} />
                         </div>
 
                         {/* Row 2 (Middle) */}
                         <div className="flex gap-1">
-                          <div className="brick" style={{ "--brick-color": "var(--color-cobalt)", "--brick-size": "24px", width: "86px", height: "22px" } as React.CSSProperties} />
-                          <div className="brick" style={{ "--brick-color": "var(--color-cobalt)", "--brick-size": "24px", width: "86px", height: "22px" } as React.CSSProperties} />
+                          <div className="brick-4x1" style={{ "--brick-color": "var(--color-cobalt)", "--brick-width": "86px", "--brick-height": "22px" } as React.CSSProperties}>
+                            <div className="brick-4x1-studs">
+                              <div className="brick-4x1-stud" />
+                              <div className="brick-4x1-stud" />
+                              <div className="brick-4x1-stud" />
+                              <div className="brick-4x1-stud" />
+                            </div>
+                          </div>
+                          <div className="brick-4x1" style={{ "--brick-color": "var(--color-cobalt)", "--brick-width": "86px", "--brick-height": "22px" } as React.CSSProperties}>
+                            <div className="brick-4x1-studs">
+                              <div className="brick-4x1-stud" />
+                              <div className="brick-4x1-stud" />
+                              <div className="brick-4x1-stud" />
+                              <div className="brick-4x1-stud" />
+                            </div>
+                          </div>
                         </div>
 
                         {/* Row 1 (Bottom Baseplate) */}
                         <div className="flex gap-1">
-                          <div className="brick" style={{ "--brick-color": "var(--color-ash)", "--brick-size": "24px", width: "56px", height: "22px" } as React.CSSProperties} />
-                          <div className="brick" style={{ "--brick-color": "var(--color-ash)", "--brick-size": "24px", width: "56px", height: "22px" } as React.CSSProperties} />
-                          <div className="brick" style={{ "--brick-color": "var(--color-ash)", "--brick-size": "24px", width: "56px", height: "22px" } as React.CSSProperties} />
+                          <div className="brick-2x1" style={{ "--brick-color": "var(--color-ash)", "--brick-width": "56px", "--brick-height": "22px" } as React.CSSProperties} />
+                          <div className="brick-2x1" style={{ "--brick-color": "var(--color-ash)", "--brick-width": "56px", "--brick-height": "22px" } as React.CSSProperties} />
+                          <div className="brick-2x1" style={{ "--brick-color": "var(--color-ash)", "--brick-width": "56px", "--brick-height": "22px" } as React.CSSProperties} />
                         </div>
                       </div>
 
@@ -467,16 +479,16 @@ export function WhyUsSection() {
                   onMouseLeave={() => setIsRocketHovered(false)}
                 >
                   <div className="flex justify-between items-center mb-4">
-                    <span className="font-mono text-xs text-gray-500 uppercase tracking-widest">
+                    <span className="font-mono text-xs text-[var(--color-ink-secondary)] uppercase tracking-widest">
                       VELOCITY LAUNCH SIMULATOR
                     </span>
-                    <span className="font-mono text-xs text-gray-400">
+                    <span className="font-mono text-xs text-[var(--color-ink-tertiary)]">
                       Hover to launch MVP
                     </span>
                   </div>
 
                   {/* Launch Chamber Frame */}
-                  <div className="flex-1 bg-white border border-gray-200/80 rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center p-6 relative">
+                  <div className="flex-1 bg-[var(--color-canvas)] border border-[rgba(26,22,18,0.08)] rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center p-6 relative">
                     
                     {/* Launchpad Grid Lines */}
                     <div className="absolute inset-0 bg-[radial-gradient(rgba(26,22,18,0.02)_1.5px,transparent_1.5px)] [background-size:16px_16px] pointer-events-none" />
@@ -513,23 +525,24 @@ export function WhyUsSection() {
                     </div>
 
                     {/* Launch Smoke & Fire Particles */}
-                    <div 
-                      className="absolute bottom-12 flex gap-1 items-center justify-center pointer-events-none"
-                      style={{
-                        opacity: isRocketHovered ? 1 : 0,
-                        transform: isRocketHovered ? "scale(1.1) translateY(0px)" : "scale(0.8) translateY(10px)",
-                        transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
-                      }}
-                    >
-                      <div className="w-3 h-3 rounded-full bg-amber-500 animate-ping" />
-                      <div className="w-5 h-5 rounded-full bg-amber-400 blur-[1px] animate-pulse" />
-                      <div className="w-4 h-4 rounded-full bg-orange-500 animate-bounce" />
-                      <div className="w-3 h-3 rounded-full bg-red-500 animate-ping" />
-                    </div>
+                    {isRocketHovered && (
+                      <div className="absolute bottom-12 flex gap-2 items-center justify-center pointer-events-none z-10">
+                        {/* Center fire core */}
+                        <div className="w-5 h-8 rounded-full bg-[var(--color-rust)] animate-fire-flicker blur-[1px]" />
+                        {/* Outer flames */}
+                        <div className="w-3 h-5 rounded-full bg-[var(--color-gold)] animate-fire-flicker blur-[1px] -ml-2" style={{ animationDelay: "75ms" }} />
+                        <div className="w-3 h-5 rounded-full bg-[var(--color-gold)] animate-fire-flicker blur-[1px] -mr-2" style={{ animationDelay: "150ms" }} />
+                        
+                        {/* Risen smoke particles */}
+                        <div className="absolute -bottom-4 w-4 h-4 rounded-full bg-[var(--color-ash)]/60 animate-smoke-rise" style={{ animationDelay: "0ms" }} />
+                        <div className="absolute -bottom-6 w-3 h-3 rounded-full bg-[var(--color-sand)]/60 animate-smoke-rise" style={{ animationDelay: "150ms" }} />
+                        <div className="absolute -bottom-5 w-5 h-5 rounded-full bg-[var(--color-ash)]/40 animate-smoke-rise" style={{ animationDelay: "300ms" }} />
+                      </div>
+                    )}
 
                     {/* Status Text overlay */}
                     <span 
-                      className="absolute bottom-6 font-mono text-[9px] text-emerald-600 font-bold uppercase tracking-wider bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded shadow-sm"
+                      className="absolute bottom-6 font-mono text-[9px] text-[var(--color-cobalt)] font-bold uppercase tracking-wider bg-[rgba(27,79,216,0.06)] border border-[var(--color-cobalt)]/20 px-2 py-0.5 rounded shadow-sm"
                       style={{
                         opacity: isRocketHovered ? 1 : 0,
                         transform: isRocketHovered ? "translateY(0)" : "translateY(5px)",

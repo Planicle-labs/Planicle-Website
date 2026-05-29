@@ -294,6 +294,112 @@ body {
   }
 }
 
+/* ============================================================
+   MULTI-STUD BRICKS
+   ============================================================ */
+
+.brick-2x1 {
+  width: var(--brick-width, 40px);
+  height: var(--brick-height, 20px);
+  background: var(--brick-color, var(--color-cobalt));
+  border-radius: 2px;
+  position: relative;
+  box-shadow:
+    inset 0 -2px 0 rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.brick-2x1::before,
+.brick-2x1::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 25%;
+  height: 55%;
+  border-radius: 50%;
+  background: inherit;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.brick-2x1::before {
+  left: 28%;
+  transform: translate(-50%, -50%);
+}
+
+.brick-2x1::after {
+  left: 72%;
+  transform: translate(-50%, -50%);
+}
+
+.brick-4x1 {
+  width: var(--brick-width, 80px);
+  height: var(--brick-height, 20px);
+  background: var(--brick-color, var(--color-cobalt));
+  border-radius: 2px;
+  position: relative;
+  box-shadow:
+    inset 0 -2px 0 rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.brick-4x1-studs {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-inline: 4px;
+}
+
+.brick-4x1-stud {
+  width: 14%;
+  height: 55%;
+  border-radius: 50%;
+  background: inherit;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================================
+   PRECISION ROCKET ANIMATIONS
+   ============================================================ */
+
+@keyframes smoke-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.6);
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(1.6);
+  }
+}
+
+@keyframes fire-flicker {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(0.85) translateY(2px);
+    opacity: 0.75;
+  }
+}
+
+.animate-smoke-rise {
+  animation: smoke-rise 0.8s var(--ease-out-expo) infinite;
+}
+
+.animate-fire-flicker {
+  animation: fire-flicker 0.4s ease-in-out infinite;
+}
+
 /* Stagger utility — animate children sequentially */
 .stagger-children > * {
   opacity: 0;
